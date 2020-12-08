@@ -213,8 +213,28 @@ function extractEmails(str) {
  *             '└──────────┘\n'
  *
  */
-function getRectangleString(/* width, height */) {
-  throw new Error('Not implemented');
+function getRectangleString(width, height) {
+  // throw new Error('Not implemented');
+  let top = '';
+  let bottom = '';
+  let str = '';
+  let spaces = '';
+  const rightUpCorner = '┐';
+  const leftUpCorner = '┌';
+  const rightBottomCorner = '┘';
+  const leftBottomCorner = '└';
+  const vertical = '│';
+  const horizontal = '─';
+  const horizontalBorderLength = width - 2;
+  let verticalBorderLength = height - 2;
+  spaces = spaces.padEnd(horizontalBorderLength, ' ');
+  top = `${leftUpCorner}${top.padEnd(horizontalBorderLength, horizontal)}${rightUpCorner}\n`;
+  bottom = `${leftBottomCorner}${bottom.padEnd(horizontalBorderLength, horizontal)}${rightBottomCorner}\n`;
+  while (verticalBorderLength) {
+    str += `${vertical}${spaces}${vertical}\n`;
+    verticalBorderLength -= 1;
+  }
+  return `${top}${str}${bottom}`;
 }
 
 
