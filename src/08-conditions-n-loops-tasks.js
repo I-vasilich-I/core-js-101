@@ -384,21 +384,6 @@ function getCommonDirectoryPath(pathes) {
   // throw new Error('Not implemented');
   let path = '';
   const pathArr = [];
-  /*
-  const pathArr = new Map();
-  pathes.forEach((elem) => {
-    const tempArr = elem.split('/');
-    tempArr.forEach((el) => {
-      pathArr.set(el, (pathArr.get(el) || 0) + 1);
-    });
-  });
-  console.log(pathArr);
-  pathArr.forEach((count, key) => {
-    if (count > 1) {
-      path += `${key}/`;
-    }
-  });
-  */
   let max = 0;
   pathes.forEach((elem) => {
     pathArr.push(elem.split('/'));
