@@ -136,8 +136,12 @@ function isTriangle(a, b, c) {
  *   { top:20, left:20, width: 20, height: 20 }    =>  false
  *
  */
-function doRectanglesOverlap(/* rect1, rect2 */) {
-  throw new Error('Not implemented');
+function doRectanglesOverlap(rect1, rect2) {
+  // throw new Error('Not implemented');
+  return ((rect2.top >= rect1.top && rect2.top <= rect1.top + rect1.height)
+    && (rect2.left >= rect1.left && rect2.left <= rect1.left + rect1.width))
+    || ((rect1.top >= rect2.top && rect1.top <= rect2.top + rect2.height)
+    && (rect1.left >= rect2.left && rect1.left <= rect2.left + rect2.width));
 }
 
 
@@ -184,8 +188,19 @@ function isInsideCircle(circle, point) {
  *   'abracadabra'  => 'c'
  *   'entente' => null
  */
-function findFirstSingleChar(/* str */) {
-  throw new Error('Not implemented');
+function findFirstSingleChar(str) {
+  // throw new Error('Not implemented');
+  const map = new Map();
+  for (let i = 0; i < str.length; i += 1) {
+    map.set(str[i], (map.get(str[i]) || 0) + 1);
+  }
+  let char = null;
+  map.forEach((elem, key) => {
+    if (elem === 1 && char === null) {
+      char = key;
+    }
+  });
+  return char;
 }
 
 
@@ -347,8 +362,9 @@ function isBracketsBalanced(/* str */) {
  *    365, 4  => '11231'
  *    365, 10 => '365'
  */
-function toNaryString(/* num, n */) {
-  throw new Error('Not implemented');
+function toNaryString(num, n) {
+  // throw new Error('Not implemented');
+  return num.toString(n);
 }
 
 
@@ -364,8 +380,47 @@ function toNaryString(/* num, n */) {
  *   ['/web/assets/style.css', '/.bin/mocha',  '/read.me'] => '/'
  *   ['/web/favicon.ico', '/web-scripts/dump', '/webalizer/logs'] => '/'
  */
-function getCommonDirectoryPath(/* pathes */) {
-  throw new Error('Not implemented');
+function getCommonDirectoryPath(pathes) {
+  // throw new Error('Not implemented');
+  let path = '';
+  const pathArr = [];
+  /*
+  const pathArr = new Map();
+  pathes.forEach((elem) => {
+    const tempArr = elem.split('/');
+    tempArr.forEach((el) => {
+      pathArr.set(el, (pathArr.get(el) || 0) + 1);
+    });
+  });
+  console.log(pathArr);
+  pathArr.forEach((count, key) => {
+    if (count > 1) {
+      path += `${key}/`;
+    }
+  });
+  */
+  let max = 0;
+  pathes.forEach((elem) => {
+    pathArr.push(elem.split('/'));
+  });
+  pathArr.forEach((elem) => {
+    if (elem.length > max) max = elem.length;
+  });
+  for (let i = 0; i < max; i += 1) {
+    let first = null;
+    pathArr[0].forEach((elem, idx) => {
+      if (idx === i) first = elem;
+    });
+    if (first === null) return path;
+    let count = 0;
+    for (let j = 0; j < pathArr.length; j += 1) {
+      if (pathArr[j][i] === first) count += 1;
+    }
+    if (count === pathArr.length) {
+      path += `${first}/`;
+    }
+  }
+  return path;
 }
 
 
@@ -387,8 +442,21 @@ function getCommonDirectoryPath(/* pathes */) {
  *                         [ 6 ]]
  *
  */
-function getMatrixProduct(/* m1, m2 */) {
-  throw new Error('Not implemented');
+function getMatrixProduct(m1, m2) {
+  // throw new Error('Not implemented');
+  const product = [];
+  m1.forEach((elem) => {
+    const row = [];
+    for (let j = 0; j < m2[0].length; j += 1) {
+      let sum = 0;
+      elem.forEach((el, k) => {
+        sum += el * (m2[k][j]);
+      });
+      row.push(sum);
+    }
+    product.push(row);
+  });
+  return product;
 }
 
 
@@ -422,8 +490,36 @@ function getMatrixProduct(/* m1, m2 */) {
  *    [    ,   ,    ]]
  *
  */
-function evaluateTicTacToePosition(/* position */) {
-  throw new Error('Not implemented');
+function evaluateTicTacToePosition(position) {
+  // throw new Error('Not implemented');
+  const X = 'X';
+  const O = '0';
+  let winner;
+  position.forEach((elem) => {
+    if (elem.every((el) => el === X && elem.length === 3)) {
+      winner = X;
+    }
+    if (elem.every((el) => el === O && elem.length === 3)) {
+      winner = O;
+    }
+  });
+  for (let i = 0; i < 3; i += 1) {
+    const j = 0;
+    if (position[j][i] === position[j + 1][i] && position[j][i] === position[j + 2][i]) {
+      if (position[j][i] === X || position[j][i] === O) {
+        winner = position[j][i];
+      }
+    }
+  }
+  const i = 0;
+  if ((position[i][i] === position[i + 1][i + 1] && position[i][i] === position[i + 2][i + 2])
+    || (position[i][i + 2] === position[i + 1][i + 1]
+      && position[i][i + 2] === position[i + 2][i])) {
+    if (position[i + 1][i + 1] === X || position[i + 1][i + 1] === O) {
+      winner = position[i + 1][i + 1];
+    }
+  }
+  return winner;
 }
 
 
