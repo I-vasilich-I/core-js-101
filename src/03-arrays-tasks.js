@@ -283,8 +283,18 @@ function getSecondItems(arr) {
  *  [ 'a', 'b', 'c', null ] => [ 'a', 'b','b', 'c','c','c',  null,null,null,null ]
  *  [ 1,2,3,4,5 ] => [ 1, 2,2, 3,3,3, 4,4,4,4, 5,5,5,5,5 ]
  */
-function propagateItemsByPositionIndex(/* arr */) {
-  throw new Error('Not implemented');
+function propagateItemsByPositionIndex(arr) {
+  // throw new Error('Not implemented');
+  const newArr = [];
+  const callback = (elem, i) => {
+    let j = i;
+    do {
+      newArr.push(elem);
+      j -= 1;
+    } while (j > 0);
+  };
+  arr.map((elem, i) => callback(elem, i + 1));
+  return newArr;
 }
 
 
@@ -338,8 +348,13 @@ function getPositivesCount(arr) {
  *   [ 'nine','eight','nine','eight'] => [ 'eight','eight','nine','nine']
  *   [ 'one','one','one','zero' ]     => [ 'zero','one','one','one' ]
  */
-function sortDigitNamesByNumericOrder(/* arr */) {
-  throw new Error('Not implemented');
+function sortDigitNamesByNumericOrder(arr) {
+  // throw new Error('Not implemented');
+  const array = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
+  return arr.sort((a, b) => {
+    if (array.findIndex((el) => el === a) < array.findIndex((el) => el === b)) return -1;
+    return 1;
+  });
 }
 
 /**
@@ -558,8 +573,9 @@ function group(/* array, keySelector, valueSelector */) {
  *   [[1, 2], [3, 4], [5, 6]], (x) => x     =>   [ 1, 2, 3, 4, 5, 6 ]
  *   ['one','two','three'], x=>x.split('')  =>   ['o','n','e','t','w','o','t','h','r','e','e']
  */
-function selectMany(/* arr, childrenSelector */) {
-  throw new Error('Not implemented');
+function selectMany(arr, childrenSelector) {
+  // throw new Error('Not implemented');
+  return arr.map((x) => childrenSelector(x)).flat();
 }
 
 
@@ -601,8 +617,17 @@ function getElementByIndexes(arr, indexes) {
  *   [ 1, 2, 3, 4, 5, 6, 7, 8 ]   =>  [ 5, 6, 7, 8, 1, 2, 3, 4 ]
  *
  */
-function swapHeadAndTail(/* arr */) {
-  throw new Error('Not implemented');
+function swapHeadAndTail(arr) {
+  // throw new Error('Not implemented');
+  if (arr.length < 2) return arr;
+  const newArr = [];
+  const halfL = Number.parseInt(arr.length / 2, 10);
+  newArr.push(...arr.slice(arr.length % 2 !== 0 ? halfL + 1 : halfL, arr.length));
+  if (arr.length % 2 !== 0) {
+    newArr.push(...arr.slice(halfL, halfL + 1));
+  }
+  newArr.push(...arr.slice(0, halfL));
+  return newArr;
 }
 
 
